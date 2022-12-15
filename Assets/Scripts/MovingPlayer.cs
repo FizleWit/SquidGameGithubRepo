@@ -6,13 +6,13 @@ using Photon.Pun;
 public class MovingPlayer : MonoBehaviour
 {
     public CharacterController playerController;
-    public float speed = 12f;
+    public float speed = 5f;
     public float gravity = -9.81f;
     public Transform groundCheck;
 
     public float jumpHeight = 3f;
 
-    public float groundDistance = 0.4f;
+    public float groundDistance = 5f;
     public LayerMask groundMask;
 
     Vector3 velocity;
@@ -30,13 +30,15 @@ public class MovingPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
        
         if(playerViewer.IsMine)
         {
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
            // ProcessInputs();
-        if(Input.GetButtonDown("Jump") )
+        if(Input.GetButtonDown("Jump") && isGrounded)
         {
-            velocity.y = jumpHeight;
+            velocity.y = Mathf.Sqrt(jumpHeight * 2f);
 
         }
 
